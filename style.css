@@ -109,7 +109,7 @@ ul li.checked::before {
   width: 100%;
   gap: 15px;
 
-  justify-content: center;
+  justify-content: start;
 
   background-color: #ffc4e0;
 }
