@@ -98,6 +98,7 @@ ul li.checked::before {
 
 .header {
   position: fixed;
+left: 0px;
   bottom: 0px;
 
   padding-bottom: 20px;
