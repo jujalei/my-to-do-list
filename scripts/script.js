@@ -1,5 +1,5 @@
 import refs from './refs.js';
-import { addNewTask } from './functions.js';
+import { addNewTask, handleTaskBehavior } from './functions.js';
 
 refs.addBtn.addEventListener('click', addNewTask);
-// refs.myUL.addEventListener('click');
+refs.myUL.addEventListener('click', handleTaskBehavior);

@@ -39,4 +39,13 @@ function createLi({ text, isDone = false }) {
   addCloseButton(liEl);
 }
 
-export { addNewTask };
+function handleTaskBehavior({ target }) {
+  console.log(target);
+  if (target.tagName === 'LI') {
+    target.classList.toggle('checked');
+  } else if (target.classList.contains('close')) {
+    target.closest('li').remove();
+  }
+}
+
+export { addNewTask, handleTaskBehavior };
