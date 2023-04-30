@@ -33,13 +33,13 @@ function addNewTask() {
   clearInput();
 }
 
-function createLi({ text, isDone = false }) {
+function createLi({ text, isDone = false, id = currentID }) {
   const liEl = document.createElement('li');
   liEl.textContent = text;
-  liEl.dataset.id = currentID;
+  liEl.dataset.id = id;
 
   if (isDone) {
-    liEl.className = 'checked';
+    liEl.classList.add('checked');
   }
 
   refs.myUL.appendChild(liEl);
@@ -88,6 +88,11 @@ function addTaskToStorage(text) {
   currentID += 1;
 }
 
-function fillTasksList() {}
+function fillTasksList() {
+  const currentState = load(STORAGE_KEY);
+  if (currentState !== undefined) {
+    currentState.forEach(taskObj => createLi(taskObj));
+  }
+}
 
-export { addNewTask, handleTaskBehavior };
+export { addNewTask, handleTaskBehavior, fillTasksList };
