@@ -1,4 +1,8 @@
 import refs from './refs.js';
+import { load, save } from './storage.js';
+
+const STORAGE_KEY = 'tasks';
+let currentID = 1;
 
 function addCloseButton(target) {
   const span = document.createElement('span');
@@ -25,12 +29,15 @@ function addNewTask() {
     text: value,
   });
 
+  addTaskToStorage(value);
   clearInput();
 }
 
 function createLi({ text, isDone = false }) {
   const liEl = document.createElement('li');
   liEl.textContent = text;
+  liEl.dataset.id = currentID;
+
   if (isDone) {
     liEl.className = 'checked';
   }
@@ -40,12 +47,47 @@ function createLi({ text, isDone = false }) {
 }
 
 function handleTaskBehavior({ target }) {
-  console.log(target);
+  const currentState = load(STORAGE_KEY);
+
   if (target.tagName === 'LI') {
     target.classList.toggle('checked');
+    const taskObj = currentState.find(
+      task => Number(task.id) === Number(target.dataset.id)
+    );
+    taskObj.isDone = !taskObj.isDone;
+    console.log(taskObj);
   } else if (target.classList.contains('close')) {
     target.closest('li').remove();
   }
+
+  const taskIndex = currentState.findIndex(
+    task => Number(task.id) === Number(target.closest('li').dataset.id)
+  );
+  currentState.splice(taskIndex, 1);
+  console.log(taskIndex);
+
+  save(STORAGE_KEY, currentState);
 }
+
+function createTaskObj({ text, isDone = false }) {
+  return {
+    text,
+    isDone,
+    id: currentID,
+  };
+}
+
+function addTaskToStorage(text) {
+  const currentState = load(STORAGE_KEY);
+  if (currentState === undefined) {
+    save(STORAGE_KEY, [createTaskObj({ text })]);
+  } else {
+    currentState.push(createTaskObj({ text }));
+    save(STORAGE_KEY, currentState);
+  }
+  currentID += 1;
+}
+
+function fillTasksList() {}
 
 export { addNewTask, handleTaskBehavior };
