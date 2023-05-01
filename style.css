@@ -98,6 +98,7 @@ ul li.checked::before {
 .title {
   position: fixed;
   top: 0px;
+  left: 0;
 
   z-index: 999;
 
@@ -119,6 +120,7 @@ ul li.checked::before {
 .header {
   position: fixed;
   bottom: 0px;
+  left: 0;
 
   padding: 10px 20px 10px 10px;
 
