@@ -33,7 +33,7 @@ ul li {
   position: relative;
   padding: 12px 8px 12px 40px;
   list-style-type: none;
-  background: #eeeeee7e;
+  background: #00943446;
   font-size: 16px;
   transition: 0.2s;
 
@@ -162,6 +162,7 @@ ul li.checked::before {
 }
 
 .addBtn:hover,
-.addBtn:focus {
-  background-color: rgb(255, 255, 255);
+.addBtn:focus,
+.addBtn:active {
+  background-color: rgb(255, 205, 43);
 }
