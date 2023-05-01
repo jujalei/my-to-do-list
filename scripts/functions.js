@@ -13,10 +13,7 @@ function addCloseButton(target) {
 }
 
 function addNewTask() {
-  const clearInput = () => {
-    refs.myInput.value = '';
-  };
-
+  const clearInput = () => (refs.myInput.value = '');
   const value = refs.myInput.value.trim();
 
   if (value === '') {
@@ -91,7 +88,11 @@ function addTaskToStorage(text) {
 function fillTasksList() {
   const currentState = load(STORAGE_KEY);
   if (currentState !== undefined) {
-    currentState.forEach(taskObj => createLi(taskObj));
+    currentState.forEach(createLi);
+    currentID =
+      currentState.length === 0
+        ? 1
+        : currentState[currentState.length - 1].id + 1;
   }
 }
 
