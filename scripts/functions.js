@@ -30,6 +30,13 @@ function addNewTask() {
   clearInput();
 }
 
+function addNewTaskOnEnter(evt) {
+  if (evt.key === 'Enter') {
+    console.log(evt.code);
+    addNewTask();
+  }
+}
+
 function createLi({ text, isDone = false, id = currentID }) {
   const liEl = document.createElement('li');
   liEl.textContent = text;
@@ -43,6 +50,29 @@ function createLi({ text, isDone = false, id = currentID }) {
   addCloseButton(liEl);
 }
 
+// function handleTaskBehavior({ target }) {
+//   const currentState = load(STORAGE_KEY);
+
+//   if (target.tagName === 'LI') {
+//     target.classList.toggle('checked');
+//     const taskObj = currentState.find(
+//       task => Number(task.id) === Number(target.dataset.id)
+//     );
+//     taskObj.isDone = !taskObj.isDone;
+//     console.log(taskObj);
+//   } else if (target.classList.contains('close')) {
+//     target.closest('li').remove();
+//   }
+
+//   const taskIndex = currentState.findIndex(
+//     task => Number(task.id) === Number(target.closest('li').dataset.id)
+//   );
+//   currentState.splice(taskIndex, 1);
+//   console.log(taskIndex);
+
+//   save(STORAGE_KEY, currentState);
+// }
+
 function handleTaskBehavior({ target }) {
   const currentState = load(STORAGE_KEY);
 
@@ -54,14 +84,13 @@ function handleTaskBehavior({ target }) {
     taskObj.isDone = !taskObj.isDone;
     console.log(taskObj);
   } else if (target.classList.contains('close')) {
+    const taskIndex = currentState.findIndex(
+      task => Number(task.id) === Number(target.closest('li').dataset.id)
+    );
+    currentState.splice(taskIndex, 1);
+    console.log(taskIndex);
     target.closest('li').remove();
   }
-
-  const taskIndex = currentState.findIndex(
-    task => Number(task.id) === Number(target.closest('li').dataset.id)
-  );
-  currentState.splice(taskIndex, 1);
-  console.log(taskIndex);
 
   save(STORAGE_KEY, currentState);
 }
@@ -96,4 +125,4 @@ function fillTasksList() {
   }
 }
 
-export { addNewTask, handleTaskBehavior, fillTasksList };
+export { addNewTask, addNewTaskOnEnter, handleTaskBehavior, fillTasksList };
